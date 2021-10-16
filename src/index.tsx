@@ -1,5 +1,6 @@
 import {
   Action,
+  Block,
   Button,
   Checkboxes,
   Datepicker,
@@ -17,19 +18,22 @@ import {
 import { Box, Text } from "ink";
 import marked from "marked";
 import TerminalRenderer from "marked-terminal";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 // setup TerminalRenderer
 marked.setOptions({ renderer: new TerminalRenderer() });
 
-export function Slack({ children }: { children: KnownBlock[] }) {
-  return slack2Ink({ blocks: children })();
+// Actually, childre should be
+export function Slack({ children }: { children: (KnownBlock | Block)[] }) {
+  return <>{children.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
 }
-export function slack2Ink({ blocks }: { blocks: KnownBlock[] }) {
-  return () => <>{blocks.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
+export function slack2Ink({ blocks }: { blocks: (KnownBlock | Block)[] }) {
+  return () => Slack({ children: blocks });
 }
 
-export function convertBlock(key: string, block: KnownBlock): JSX.Element {
+export function convertBlock(key: string, block: KnownBlock | Block): JSX.Element {
+  assertKnownBlocks(block);
+
   switch (block.type) {
     case "actions":
       return (
@@ -117,4 +121,10 @@ export function convertText(key: string, e: PlainTextElement | MrkdwnElement | u
   if (typeof e === "undefined") return;
 
   return e.type === "mrkdwn" ? <Text key={key}>{marked(e.text)}</Text> : <Text key={key}>{e.text}</Text>;
+}
+
+function assertKnownBlock(block: KnownBlock | Block): asserts block is KnownBlock {
+  if (!["actions", "context", "divider", "file", "header", "image", "input", "section"].includes(block.type)) {
+    throw new Error(`unknow block: ${block.type}`);
+  }
 }

@@ -32,7 +32,7 @@ export function slack2Ink({ blocks }: { blocks: (KnownBlock | Block)[] }) {
 }
 
 export function convertBlock(key: string, block: KnownBlock | Block): JSX.Element {
-  assertKnownBlocks(block);
+  assertKnownBlock(block);
 
   switch (block.type) {
     case "actions":

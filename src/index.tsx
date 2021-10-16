@@ -22,6 +22,9 @@ import React, { Fragment } from "react";
 // setup TerminalRenderer
 marked.setOptions({ renderer: new TerminalRenderer() });
 
+export function Slack({ children }: { children: KnownBlock[] }) {
+  return slack2Ink({ blocks: children })();
+}
 export function slack2Ink({ blocks }: { blocks: KnownBlock[] }) {
   return () => <>{blocks.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
 }

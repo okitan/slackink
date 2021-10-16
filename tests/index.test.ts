@@ -5,7 +5,7 @@ import { slack2Ink } from "../src";
 
 describe(slack2Ink, () => {
   test("works", () => {
-    expect(slack2Ink({ blocks: exampleJSXBlocks() })()).toMatchInlineSnapshot(`
+    expect(slack2Ink({ blocks: exampleJSXBlocks })()).toMatchInlineSnapshot(`
       <React.Fragment>
         <React.Fragment>
           <Text

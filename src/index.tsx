@@ -1,0 +1,121 @@
+import {
+  Action,
+  Button,
+  Checkboxes,
+  Datepicker,
+  ImageElement,
+  KnownBlock,
+  MrkdwnElement,
+  MultiSelect,
+  Overflow,
+  PlainTextElement,
+  RadioButtons,
+  SectionBlock,
+  Select,
+  Timepicker,
+} from "@slack/types";
+import { Box, Text } from "ink";
+import React, { Fragment } from "react";
+
+export function slack2Ink({ blocks }: { blocks: KnownBlock[] }) {
+  return () => <>{blocks.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
+}
+
+export function convertBlock(key: string, block: KnownBlock): JSX.Element {
+  switch (block.type) {
+    case "actions":
+      return (
+        <Fragment key={key}>{block.elements.map((e, i) => convertElement(`${key}-actions-elements-${i}`, e))}</Fragment>
+      );
+    case "context":
+      return (
+        <Fragment key={key}>
+          {block.elements.map((e, i) => convertElement(`${key}-contexts-elements-${i}`, e))}
+        </Fragment>
+      );
+    case "divider":
+      return <Text key={key}>--------------------------------------------------------------------------------</Text>;
+    case "file":
+      return <Text key={key}>(file block is not yet supported)</Text>;
+    case "header":
+      // larger is difficult
+      return (
+        <Text key={key} bold>
+          {block.text}
+        </Text>
+      );
+    case "image":
+      return <Text key={key}>(image block is not yet supported)</Text>;
+    case "input":
+      return <Text key={key}>(input block is not yet supported)</Text>;
+    case "section":
+      return (
+        <Fragment key={key}>
+          {convertElement(`${key}-section-text`, block.text)}
+          {convertFields(`${key}-section-fields`, block.fields)}
+          {convertElement(`${key}-section-accessory`, block.accessory)}
+        </Fragment>
+      );
+    default:
+      const _never: never = block;
+      // @ts-ignore
+      return <Text key={key}>(unknown block {block.type} comes here)</Text>;
+  }
+}
+
+export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.Element | undefined {
+  if (typeof fields === "undefined") return;
+
+  return (
+    <Box key={key}>
+      {fields.map((e, i) => (
+        <Text>(fields is not yet supported)</Text>
+      ))}
+    </Box>
+  );
+}
+
+export function convertElement(
+  key: string,
+  element: // Actions
+  | Button
+    | Checkboxes
+    | Datepicker
+    | MultiSelect
+    | Overflow
+    | RadioButtons
+    | Select
+    | Timepicker
+    | Action
+    // Elements
+    | ImageElement
+    | PlainTextElement
+    | MrkdwnElement
+    | undefined
+): JSX.Element | undefined {
+  if (typeof element === "undefined") return;
+
+  if ("text" in element && element.type !== "button") return convertText(key, element);
+  if ("image_url" in element) return <Text key={key}>(image is not yet supported)</Text>;
+
+  // rests are actions
+  switch (element.type) {
+    default:
+      return <Text key={key}>(actions are not yet supported)</Text>;
+  }
+}
+
+export function convertText(key: string, e: PlainTextElement | MrkdwnElement | undefined): JSX.Element | undefined {
+  if (typeof e === "undefined") return;
+
+  if (e.type === "mrkdwn") {
+    // TODO: use ink-markdown
+    return (
+      <Fragment key={key}>
+        <Text>{e.text}</Text>
+      </Fragment>
+    );
+  } else {
+    return <Text key={key}>{e.text}</Text>;
+  }
+}

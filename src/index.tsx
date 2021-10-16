@@ -15,7 +15,12 @@ import {
   Timepicker,
 } from "@slack/types";
 import { Box, Text } from "ink";
+import marked from "marked";
+import TerminalRenderer from "marked-terminal";
 import React, { Fragment } from "react";
+
+// setup TerminalRenderer
+marked.setOptions({ renderer: new TerminalRenderer() });
 
 export function slack2Ink({ blocks }: { blocks: KnownBlock[] }) {
   return () => <>{blocks.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
@@ -108,14 +113,5 @@ export function convertElement(
 export function convertText(key: string, e: PlainTextElement | MrkdwnElement | undefined): JSX.Element | undefined {
   if (typeof e === "undefined") return;
 
-  if (e.type === "mrkdwn") {
-    // TODO: use ink-markdown
-    return (
-      <Fragment key={key}>
-        <Text>{e.text}</Text>
-      </Fragment>
-    );
-  } else {
-    return <Text key={key}>{e.text}</Text>;
-  }
+  return e.type === "mrkdwn" ? <Text key={key}>{marked(e.text)}</Text> : <Text key={key}>{e.text}</Text>;
 }

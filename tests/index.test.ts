@@ -1,5 +1,4 @@
 import Chalk from "chalk";
-import React from "react";
 
 import { exampleJSXBlocks } from "../samples/fixtures/jsxslack";
 import { slack2Ink } from "../src";

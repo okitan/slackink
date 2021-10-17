@@ -118,7 +118,7 @@ export function convertText(key: string, e: PlainTextElement | MrkdwnElement | u
   if (typeof e === "undefined") return;
 
   return e.type === "mrkdwn" ? (
-    <Text key={key}>{marked(e.text.replaceAll(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
+    <Text key={key}>{marked(e.text.replace(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
   ) : (
     <Text key={key}>{e.text}</Text>
   );

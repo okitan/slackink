@@ -1,5 +1,4 @@
 import { render } from "ink";
-import React from "react";
 
 import { Slack } from "../src";
 import { exampleJSXBlocks } from "./fixtures/jsxslack";

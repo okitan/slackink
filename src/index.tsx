@@ -116,7 +116,11 @@ export function convertElement(
 export function convertText(key: string, e: PlainTextElement | MrkdwnElement | undefined): JSX.Element | undefined {
   if (typeof e === "undefined") return;
 
-  return e.type === "mrkdwn" ? <Text key={key}>{marked(e.text)}</Text> : <Text key={key}>{e.text}</Text>;
+  return e.type === "mrkdwn" ? (
+    <Text key={key}>{marked(e.text.replaceAll(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
+  ) : (
+    <Text key={key}>{e.text}</Text>
+  );
 }
 
 function assertKnownBlock(block: KnownBlock | Block): asserts block is KnownBlock {

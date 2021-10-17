@@ -18,7 +18,7 @@ describe(slack2Ink, () => {
           >
             [0mEnjoy building blocks![0m
 
-      [0m&gt; [3m[34m[34m[4mhttps://github.com/yhatt/jsx-slack|jsx-slack[24m[39m[34m[39m[23m[0m
+      [0m&gt; [3m[34mjsx-slack ([34m[4mhttps://github.com/yhatt/jsx-slack[24m[39m[34m)[39m[23m[0m
       [0m&gt; [3mBuild JSON for Slack Block Kit from JSX[23m[0m
       [0m&gt; [0m
 
@@ -44,7 +44,7 @@ describe(slack2Ink, () => {
             underline={false}
             wrap="wrap"
           >
-            [0mMaintained by &lt;[34m[34m[4mhttps://github.com/yhatt|Yuki[24m[39m[34m[39m Hattori&gt;[0m
+            [0mMaintained by [34mYuki Hattori ([34m[4mhttps://github.com/yhatt[24m[39m[34m)[39m[0m
 
 
           </Text>

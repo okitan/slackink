@@ -1,4 +1,9 @@
-import {
+import { Box, Text } from "ink";
+import marked from "marked";
+import TerminalRenderer from "marked-terminal";
+import { Fragment } from "react";
+
+import type {
   Action,
   Block,
   Button,
@@ -15,10 +20,6 @@ import {
   Select,
   Timepicker,
 } from "@slack/types";
-import { Box, Text } from "ink";
-import marked from "marked";
-import TerminalRenderer from "marked-terminal";
-import { Fragment } from "react";
 
 // setup TerminalRenderer
 marked.setOptions({ renderer: new TerminalRenderer() });

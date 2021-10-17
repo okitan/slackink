@@ -23,7 +23,7 @@ import { Fragment } from "react";
 // setup TerminalRenderer
 marked.setOptions({ renderer: new TerminalRenderer() });
 
-// Actually, childre should be
+// Actually, children should be KnownBlock but I accept Block here
 export function Slack({ children }: { children: (KnownBlock | Block)[] }) {
   return <>{children.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
 }
@@ -68,10 +68,6 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
           {convertElement(`${key}-section-accessory`, block.accessory)}
         </Fragment>
       );
-    default:
-      const _never: never = block;
-      // @ts-ignore
-      return <Text key={key}>(unknown block {block.type} comes here)</Text>;
   }
 }
 

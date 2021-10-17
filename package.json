@@ -1,5 +1,5 @@
 {
-  "name": "@okian/slackink",
+  "name": "@okian/ink-slack",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -21,8 +21,8 @@
   "homepage": "https://github.com/okitan/slackink#readme",
   "devDependencies": {
     "@types/jest": "27.0.2",
-    "@types/marked": "^3.0.1",
-    "@types/marked-terminal": "^3.1.2",
+    "@types/marked": "3.0.1",
+    "@types/marked-terminal": "3.1.2",
     "@types/react": "17.0.30",
     "jest": "27.2.5",
     "jsx-slack": "4.3.0",

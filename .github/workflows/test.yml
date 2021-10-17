@@ -4,12 +4,12 @@ on:
   push:
 
 jobs:
-  test:
+  test-with-npm6:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: ["12", "14"]
       fail-fast: false
 
     steps:
@@ -18,10 +18,27 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: actions/cache@v2
+          cache: "npm"
+      - run: npm ci
+      - run: npm install ink react
+      - name: test
+        uses: mattallty/jest-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: ["16"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
       - run: npm ci
       - name: test
         uses: mattallty/jest-github-action@master

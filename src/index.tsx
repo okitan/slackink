@@ -47,7 +47,7 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
         </Fragment>
       );
     case "divider":
-      return <Text key={key}>--------------------------------------------------------------------------------</Text>;
+      return <Text key={key}>────────────────────────────────────────────────────────────────────────────────</Text>;
     case "file":
       return <Text key={key}>(file block is not yet supported)</Text>;
     case "header":

@@ -1,7 +1,8 @@
 import Chalk from "chalk";
 
 import { exampleJSXBlocks } from "../samples/fixtures/jsxslack";
-import { slack2Ink } from "../src";
+
+const { slack2Ink } = await import("../src");
 
 const originalChalkLevel = Chalk.level;
 

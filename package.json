@@ -1,12 +1,13 @@
 {
   "name": "@okitan/ink-slack",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && tsc --build tsconfig.build.json",
     "build:check": "tsc --noEmit",
-    "test": "jest",
+    "test": "node --no-warnings --experimental-vm-modules node_modules/.bin/jest",
     "ts": "ts-node -T"
   },
   "repository": {

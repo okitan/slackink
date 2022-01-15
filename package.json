@@ -20,6 +20,9 @@
     "url": "https://github.com/okitan/slackink/issues"
   },
   "homepage": "https://github.com/okitan/slackink#readme",
+  "engines": {
+    "node": "^12.17.0 || ^14.13 || >=16.0.0"
+  },
   "devDependencies": {
     "@types/jest": "27.4.0",
     "@types/marked": "4.0.1",

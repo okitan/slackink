@@ -1,7 +1,8 @@
-import { Box, Text } from "ink";
-import marked from "marked";
-import TerminalRenderer from "marked-terminal";
 import { Fragment } from "react";
+
+import { Box, Text } from "ink";
+import { marked } from "marked";
+import TerminalRenderer from "marked-terminal";
 
 import type {
   Action,

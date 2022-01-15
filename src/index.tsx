@@ -2,6 +2,7 @@ import { Fragment } from "react";
 
 import { Box, Text } from "ink";
 import { marked } from "marked";
+import TerminalRenderer from "marked-terminal";
 
 import type {
   Action,
@@ -20,8 +21,6 @@ import type {
   Select,
   Timepicker,
 } from "@slack/types";
-
-const { default: TerminalRenderer } = await import("marked-terminal");
 
 // setup TerminalRenderer
 marked.setOptions({ renderer: new TerminalRenderer() });

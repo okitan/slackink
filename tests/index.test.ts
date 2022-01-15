@@ -1,6 +1,5 @@
 import { exampleJSXBlocks } from "../samples/fixtures/jsxslack";
-
-const { slack2Ink } = await import("../src");
+import { slack2Ink } from "../src";
 
 describe(slack2Ink, () => {
   test("works", () => {

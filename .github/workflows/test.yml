@@ -24,6 +24,7 @@ jobs:
         uses: mattallty/jest-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_COLOR: 1
   test:
     runs-on: ubuntu-latest
 
@@ -43,3 +44,4 @@ jobs:
         uses: mattallty/jest-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_COLOR: 1

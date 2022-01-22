@@ -1,19 +1,7 @@
-import Chalk from "chalk";
-
 import { exampleJSXBlocks } from "../samples/fixtures/jsxslack";
 import { slack2Ink } from "../src";
 
-const originalChalkLevel = Chalk.level;
-
 describe(slack2Ink, () => {
-  // In CI, Chalk level seems 0, and override it only in tests
-  beforeAll(() => {
-    Chalk.level = 3;
-  });
-  afterAll(() => {
-    Chalk.level = originalChalkLevel;
-  });
-
   test("works", () => {
     expect(slack2Ink({ blocks: exampleJSXBlocks })()).toMatchInlineSnapshot(`
       <React.Fragment>

@@ -1,9 +1,14 @@
 /** @jsxImportSource jsx-slack **/
-import { KnownBlock } from "@slack/types";
-import JSXSlack, { Actions, Blocks, Button, Context, Divider, Section } from "jsx-slack";
+import { Actions, Blocks, Button, Context, Divider, type JSXSlack, Section } from "jsx-slack";
+
+import type { KnownBlock } from "@slack/types";
+
+function _JSXSlack(element: JSXSlack.JSX.Element): any {
+  return element;
+}
 
 // taken from https://github.com/yhatt/jsx-slack
-export const exampleJSXBlocks: KnownBlock[] = JSXSlack(
+export const exampleJSXBlocks: KnownBlock[] = _JSXSlack(
   <Blocks>
     <Section>
       <p>Enjoy building blocks!</p>

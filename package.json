@@ -1,7 +1,7 @@
 {
   "name": "@okitan/ink-slack",
   "type": "module",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "exports": "./lib/index.js",
   "main": "lib/index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/okitan/slackink.git"
+    "url": "git+https://github.com/okitan/ink-slack.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/okitan/slackink/issues"
+    "url": "https://github.com/okitan/ink-slack/issues"
   },
-  "homepage": "https://github.com/okitan/slackink#readme",
+  "homepage": "https://github.com/okitan/ink-slack#readme",
   "engines": {
     "node": "^14.13 || >=16.0.0"
   },

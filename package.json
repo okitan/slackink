@@ -9,7 +9,7 @@
     "build": "rm -rf lib && tsc --build tsconfig.build.json",
     "build:check": "tsc --noEmit",
     "test": "node --no-warnings --experimental-vm-modules node_modules/.bin/jest",
-    "ts": "node --no-warnings --loader ts-node/esm --experimental-specifier-resolution=node"
+    "exec": "ts-node-esm --files"
   },
   "repository": {
     "type": "git",

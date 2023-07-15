@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/jest": "29.5.3",
     "@types/marked": "5.0.0",
-    "@types/react": "17.0.62",
+    "@types/react": "18.2.14",
     "jsx-slack": "6.0.0",
     "prettier": "3.0.0",
     "ts-jest": "29.1.1",
@@ -43,6 +43,6 @@
   },
   "peerDependencies": {
     "ink": "^3.2.0",
-    "react": "^17.0.2"
+    "react": "^17.0.2 || ^18.0.0"
   }
 }

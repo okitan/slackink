@@ -39,7 +39,7 @@
     "marked-terminal": "^5.0.0"
   },
   "optionalDependencies": {
-    "@slack/types": "^2.4.0"
+    "@slack/types": "^2.8.0"
   },
   "peerDependencies": {
     "ink": "^4.2.0",

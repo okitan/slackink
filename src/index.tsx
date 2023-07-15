@@ -71,7 +71,7 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
         </Fragment>
       );
     case "video":
-      throw new Error("video block is not yet supported");
+      return <Text key={key}>(video block is not yet supported)</Text>;
   }
 }
 

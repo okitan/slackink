@@ -30,5 +30,5 @@ export const exampleJSXBlocks: KnownBlock[] = _JSXSlack(
       <Button url="https://github.com/yhatt/jsx-slack">GitHub</Button>
       <Button url="https://npm.im/jsx-slack">npm</Button>
     </Actions>
-  </Blocks>
+  </Blocks>,
 );

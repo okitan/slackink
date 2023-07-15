@@ -1,4 +1,4 @@
-declare module 'marked-terminal' {
+declare module "marked-terminal" {
   import { Renderer } from "marked";
 
   declare class TerminalRenderer extends Renderer {

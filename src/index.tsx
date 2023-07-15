@@ -70,6 +70,8 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
           {convertElement(`${key}-section-accessory`, block.accessory)}
         </Fragment>
       );
+    case "video":
+      throw new Error("video block is not yet supported");
   }
 }
 
@@ -101,7 +103,7 @@ export function convertElement(
     | ImageElement
     | PlainTextElement
     | MrkdwnElement
-    | undefined
+    | undefined,
 ): JSX.Element | undefined {
   if (typeof element === "undefined") return;
 
@@ -126,7 +128,7 @@ export function convertText(key: string, e: PlainTextElement | MrkdwnElement | u
 }
 
 function assertKnownBlock(block: KnownBlock | Block): asserts block is KnownBlock {
-  if (!["actions", "context", "divider", "file", "header", "image", "input", "section"].includes(block.type)) {
+  if (!["actions", "context", "divider", "file", "header", "image", "input", "section", "video"].includes(block.type)) {
     throw new Error(`unknow block: ${block.type}`);
   }
 }

@@ -23,6 +23,7 @@ import type {
 } from "@slack/types";
 
 // setup TerminalRenderer
+marked.use({ mangle: false, headerIds: false });
 marked.setOptions({ renderer: new TerminalRenderer() });
 
 // Actually, children should be KnownBlock but I accept Block here
@@ -55,7 +56,7 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
       // larger is difficult
       return (
         <Text key={key} bold>
-          {block.text}
+          {block.text.text}
         </Text>
       );
     case "image":

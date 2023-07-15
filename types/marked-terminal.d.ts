@@ -1,7 +1,9 @@
-import { Renderer } from "marked";
+declare module "marked-terminal" {
+  import { Renderer } from "marked";
 
-declare class TerminalRenderer extends Renderer {
-  constructor(options?: TerminalRenderer.TerminalRendererOptions);
+  declare class TerminalRenderer extends Renderer {
+    constructor();
+  }
+
+  export = TerminalRenderer;
 }
-
-export = TerminalRenderer;

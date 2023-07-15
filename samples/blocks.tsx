@@ -1,7 +1,7 @@
 import { render } from "ink";
 
-import { Slack } from "../src";
-import { exampleJSXBlocks } from "./fixtures/jsxslack";
+import { Slack } from "../src/index.js";
+import { exampleJSXBlocks } from "./fixtures/jsxslack.js";
 
 render(<Slack>{exampleJSXBlocks}</Slack>);
 

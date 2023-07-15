@@ -55,7 +55,7 @@ export function convertBlock(key: string, block: KnownBlock | Block): JSX.Elemen
       // larger is difficult
       return (
         <Text key={key} bold>
-          {block.text}
+          {block.text.text}
         </Text>
       );
     case "image":

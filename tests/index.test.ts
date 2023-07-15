@@ -1,5 +1,5 @@
-import { exampleJSXBlocks } from "../samples/fixtures/jsxslack";
-import { slack2Ink } from "../src";
+import { exampleJSXBlocks } from "../samples/fixtures/jsxslack.js";
+import { slack2Ink } from "../src/index.js";
 
 describe(slack2Ink, () => {
   test("works", () => {

@@ -50,6 +50,8 @@ module.exports = {
   // Make calling deprecated APIs throw helpful error messages
   // errorOnDeprecated: false,
 
+  extensionsToTreatAsEsm: [".ts", ".tsx"],
+
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
 
@@ -87,6 +89,7 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
     "#(.*)": "<rootDir>/node_modules/$1",
   },
 

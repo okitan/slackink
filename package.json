@@ -35,7 +35,7 @@
     "typescript": "5.1.6"
   },
   "dependencies": {
-    "marked": "^5.0.0",
+    "marked": "^10.0.0",
     "marked-terminal": "^6.0.0"
   },
   "optionalDependencies": {

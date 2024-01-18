@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/jest": "29.5.11",
     "@types/marked": "5.0.2",
-    "@types/react": "18.2.47",
+    "@types/react": "18.2.48",
     "jsx-slack": "6.0.0",
     "prettier": "3.2.2",
     "ts-jest": "29.1.1",

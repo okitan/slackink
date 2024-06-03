@@ -12,6 +12,7 @@ import type {
   KnownBlock,
   MrkdwnElement,
   PlainTextElement,
+  RichTextBlock,
   SectionBlock,
 } from "@slack/types";
 
@@ -58,6 +59,12 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
       return convertImage(key, block);
     case "input":
       return <Text key={key}>(input block is not yet supported)</Text>;
+    case "rich_text":
+      return (
+        <Fragment key={key}>
+          {block.elements.map((e, i) => convertRichText(`${key}-rich_text-elements-${i}`, e))}
+        </Fragment>
+      );
     case "section":
       return (
         <Fragment key={key}>
@@ -92,7 +99,7 @@ export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.
   return (
     <Box key={key}>
       {fields.map((e, i) => (
-        <Text>(fields are not yet supported)</Text>
+        <Text key={`${key}-${i}`}>(fields are not yet supported)</Text>
       ))}
     </Box>
   );
@@ -115,6 +122,10 @@ export function convertElement(
       const never: never = element;
       throw new Error(`unknown element type: ${JSON.stringify(never)}`);
   }
+}
+
+export function convertRichText(key: string, element: Flatten<RichTextBlock["elements"]>): JSX.Element {
+  return <Text key={key}>(rich_text is not yet supported)</Text>;
 }
 
 export function convertImage(key: string, element: ImageBlock | ImageElement): JSX.Element {

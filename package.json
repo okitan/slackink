@@ -28,7 +28,7 @@
     "@types/jest": "29.5.12",
     "@types/marked": "5.0.2",
     "@types/react": "18.3.3",
-    "jsx-slack": "6.0.0",
+    "jsx-slack": "6.1.1",
     "prettier": "3.2.5",
     "ts-jest": "29.1.4",
     "tsimp": "2.0.11",

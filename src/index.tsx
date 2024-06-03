@@ -70,7 +70,7 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
         <Fragment key={key}>
           {convertElement(`${key}-section-text`, block.text)}
           {convertFields(`${key}-section-fields`, block.fields)}
-          {convertElement(`${key}-section-accessory`, block.accessory)}
+          {convertActionElement(`${key}-section-accessory`, block.accessory)}
         </Fragment>
       );
     case "video":
@@ -81,7 +81,12 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
   }
 }
 
-export function convertActionElement(key: string, element: Flatten<ActionsBlock["elements"]>): JSX.Element {
+export function convertActionElement(
+  key: string,
+  element: Flatten<ActionsBlock["elements"]> | undefined,
+): JSX.Element | undefined {
+  if (typeof element === "undefined") return undefined;
+
   return <Text key={key}>(actions are not yet supported)</Text>;
 }
 

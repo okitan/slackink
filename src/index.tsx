@@ -4,23 +4,7 @@ import { Box, Text } from "ink";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 
-import type {
-  Action,
-  ActionsBlock,
-  Button,
-  Checkboxes,
-  Datepicker,
-  ImageElement,
-  KnownBlock,
-  MrkdwnElement,
-  MultiSelect,
-  Overflow,
-  PlainTextElement,
-  RadioButtons,
-  SectionBlock,
-  Select,
-  Timepicker,
-} from "@slack/types";
+import type { ActionsBlock, KnownBlock, MrkdwnElement, PlainTextElement, SectionBlock } from "@slack/types";
 
 type Flatten<T> = T extends (infer U)[] ? U : never;
 
@@ -96,44 +80,30 @@ export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.
   return (
     <Box key={key}>
       {fields.map((e, i) => (
-        <Text>(fields is not yet supported)</Text>
+        <Text>(fields are not yet supported)</Text>
       ))}
     </Box>
   );
 }
 
-export function convertElement(
-  key: string,
-  element: // Actions
-  | Button
-    | Checkboxes
-    | Datepicker
-    | MultiSelect
-    | Overflow
-    | RadioButtons
-    | Select
-    | Timepicker
-    | Action
-    // Elements
-    | ImageElement
-    | PlainTextElement
-    | MrkdwnElement
-    | undefined,
-): JSX.Element | undefined {
+export function convertElement(key: string, element: SectionBlock["text"]): JSX.Element | undefined {
   if (typeof element === "undefined") return;
 
-  if ("text" in element && element.type !== "button") return convertText(key, element);
-  if ("image_url" in element) return <Text key={key}>(image is not yet supported)</Text>;
-
-  return <Text key={key}>(unknown element)</Text>;
+  switch (element.type) {
+    case "mrkdwn":
+      return convertText(key, element);
+    case "plain_text":
+      return convertText(key, element);
+    default:
+      const never: never = element;
+      throw new Error(`unknown element type: ${never}`);
+  }
 }
 
-export function convertText(key: string, e: PlainTextElement | MrkdwnElement | undefined): JSX.Element | undefined {
-  if (typeof e === "undefined") return;
-
-  return e.type === "mrkdwn" ? (
-    <Text key={key}>{marked(e.text.replace(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
+export function convertText(key: string, element: PlainTextElement | MrkdwnElement): JSX.Element {
+  return element.type === "mrkdwn" ? (
+    <Text key={key}>{marked(element.text.replace(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
   ) : (
-    <Text key={key}>{e.text}</Text>
+    <Text key={key}>{element.text}</Text>
   );
 }

@@ -6,7 +6,6 @@ import TerminalRenderer from "marked-terminal";
 
 import type {
   Action,
-  Block,
   Button,
   Checkboxes,
   Datepicker,
@@ -27,16 +26,14 @@ marked.use({ mangle: false, headerIds: false });
 marked.setOptions({ renderer: new TerminalRenderer() });
 
 // Actually, children should be KnownBlock but I accept Block here
-export function Slack({ children }: { children: (KnownBlock | Block)[] }) {
+export function Slack({ children }: { children: KnownBlock[] }) {
   return <>{children.map((e, i) => convertBlock(`blocks-${i}`, e))}</>;
 }
-export function slack2Ink({ blocks }: { blocks: (KnownBlock | Block)[] }) {
+export function slack2Ink({ blocks }: { blocks: KnownBlock[] }) {
   return () => Slack({ children: blocks });
 }
 
-export function convertBlock(key: string, block: KnownBlock | Block): JSX.Element {
-  assertKnownBlock(block);
-
+export function convertBlock(key: string, block: KnownBlock): JSX.Element {
   switch (block.type) {
     case "actions":
       return (
@@ -126,10 +123,4 @@ export function convertText(key: string, e: PlainTextElement | MrkdwnElement | u
   ) : (
     <Text key={key}>{e.text}</Text>
   );
-}
-
-function assertKnownBlock(block: KnownBlock | Block): asserts block is KnownBlock {
-  if (!["actions", "context", "divider", "file", "header", "image", "input", "section", "video"].includes(block.type)) {
-    throw new Error(`unknow block: ${block.type}`);
-  }
 }

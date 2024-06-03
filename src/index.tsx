@@ -70,6 +70,9 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
       );
     case "video":
       return <Text key={key}>(video block is not yet supported)</Text>;
+    default:
+      const never: never = block;
+      throw new Error(`unknown block type: ${never}`);
   }
 }
 

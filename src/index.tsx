@@ -6,6 +6,7 @@ import TerminalRenderer from "marked-terminal";
 
 import type {
   Action,
+  ActionsBlock,
   Button,
   Checkboxes,
   Datepicker,
@@ -20,6 +21,8 @@ import type {
   Select,
   Timepicker,
 } from "@slack/types";
+
+type Flatten<T> = T extends (infer U)[] ? U : never;
 
 // setup TerminalRenderer
 marked.use({ mangle: false, headerIds: false });
@@ -37,7 +40,9 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
   switch (block.type) {
     case "actions":
       return (
-        <Fragment key={key}>{block.elements.map((e, i) => convertElement(`${key}-actions-elements-${i}`, e))}</Fragment>
+        <Fragment key={key}>
+          {block.elements.map((e, i) => convertActionElement(`${key}-actions-elements-${i}`, e))}
+        </Fragment>
       );
     case "context":
       return (
@@ -76,6 +81,10 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
   }
 }
 
+export function convertActionElement(key: string, element: Flatten<ActionsBlock["elements"]>): JSX.Element {
+  return <Text key={key}>(actions are not yet supported)</Text>;
+}
+
 export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.Element | undefined {
   if (typeof fields === "undefined") return;
 
@@ -111,11 +120,7 @@ export function convertElement(
   if ("text" in element && element.type !== "button") return convertText(key, element);
   if ("image_url" in element) return <Text key={key}>(image is not yet supported)</Text>;
 
-  // rests are actions
-  switch (element.type) {
-    default:
-      return <Text key={key}>(actions are not yet supported)</Text>;
-  }
+  return <Text key={key}>(unknown element)</Text>;
 }
 
 export function convertText(key: string, e: PlainTextElement | MrkdwnElement | undefined): JSX.Element | undefined {

@@ -13,6 +13,8 @@ import type {
   MrkdwnElement,
   PlainTextElement,
   RichTextBlock,
+  RichTextElement,
+  RichTextSection,
   SectionBlock,
 } from "@slack/types";
 
@@ -83,7 +85,7 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
 
 export function convertActionElement(
   key: string,
-  element: Flatten<ActionsBlock["elements"]> | SectionBlock["accessory"],
+  element: Flatten<ActionsBlock["elements"]> | SectionBlock["accessory"]
 ): JSX.Element | undefined {
   if (typeof element === "undefined") return undefined;
 
@@ -107,7 +109,7 @@ export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.
 
 export function convertElement(
   key: string,
-  element: Flatten<ContextBlock["elements"]> | SectionBlock["text"],
+  element: Flatten<ContextBlock["elements"]> | SectionBlock["text"]
 ): JSX.Element | undefined {
   if (typeof element === "undefined") return;
 
@@ -125,7 +127,40 @@ export function convertElement(
 }
 
 export function convertRichText(key: string, element: Flatten<RichTextBlock["elements"]>): JSX.Element {
-  return <Text key={key}>(rich_text is not yet supported)</Text>;
+  switch (element.type) {
+    case "rich_text_list":
+      return (
+        <Text key={key}>
+          {element.elements.map((e, i) => (
+            //TODO: tell convertRichTextSection to use bullet
+            <Text key={`${key}-${i}`}>* {convertRichTextSection(`${key}-${i}`, e)}</Text>
+          ))}
+        </Text>
+      );
+    case "rich_text_section":
+      return <Fragment key={key}>{element.elements.map((e) => convertRichTextElement(key, e))}</Fragment>;
+    case "rich_text_preformatted":
+      return <Text key={key}>{`(${element.type} is not yet supported)`}</Text>;
+    case "rich_text_quote":
+      //TODO: tell convertRichTextSection to use quote
+      return (
+        <Text key={key}>
+          {">"} {element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}
+        </Text>
+      );
+  }
+}
+
+export function convertRichTextSection(key: string, element: RichTextSection): JSX.Element {
+  return <Fragment key={key}>{element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}</Fragment>;
+}
+
+export function convertRichTextElement(key: string, element: RichTextElement): JSX.Element {
+  switch (element.type) {
+    case "text":
+      return <Text key={key}>{element.text}</Text>;
+  }
+  return <Text key={key}>({element.type} is not yet supported)</Text>;
 }
 
 export function convertImage(key: string, element: ImageBlock | ImageElement): JSX.Element {

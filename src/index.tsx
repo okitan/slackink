@@ -85,7 +85,7 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
 
 export function convertActionElement(
   key: string,
-  element: Flatten<ActionsBlock["elements"]> | SectionBlock["accessory"]
+  element: Flatten<ActionsBlock["elements"]> | SectionBlock["accessory"],
 ): JSX.Element | undefined {
   if (typeof element === "undefined") return undefined;
 
@@ -109,7 +109,7 @@ export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.
 
 export function convertElement(
   key: string,
-  element: Flatten<ContextBlock["elements"]> | SectionBlock["text"]
+  element: Flatten<ContextBlock["elements"]> | SectionBlock["text"],
 ): JSX.Element | undefined {
   if (typeof element === "undefined") return;
 
@@ -163,16 +163,16 @@ export function convertRichTextElement(key: string, element: RichTextElement): J
     element.type === "channel"
       ? `#${element.channel_id}`
       : element.type === "emoji"
-      ? `:${element.name}:`
-      : element.type === "link"
-      ? element.url
-      : element.type === "text"
-      ? element.text
-      : element.type === "user"
-      ? `@${element.user_id}`
-      : element.type === "usergroup"
-      ? `@${element.usergroup_id}`
-      : undefined;
+        ? `:${element.name}:`
+        : element.type === "link"
+          ? element.url
+          : element.type === "text"
+            ? element.text
+            : element.type === "user"
+              ? `@${element.user_id}`
+              : element.type === "usergroup"
+                ? `@${element.usergroup_id}`
+                : undefined;
 
   return (
     <Text key={key} bold={element.style?.bold} italic={element.style?.italic} strikethrough={element.style?.strike}>

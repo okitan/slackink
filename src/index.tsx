@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { Box, Text } from "ink";
+import { Box, Newline, Text } from "ink";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 
@@ -133,12 +133,15 @@ export function convertRichText(key: string, element: Flatten<RichTextBlock["ele
         <Text key={key}>
           {element.elements.map((e, i) => (
             //TODO: tell convertRichTextSection to use bullet
-            <Text key={`${key}-${i}`}>* {convertRichTextSection(`${key}-${i}`, e)}</Text>
+            <Fragment key={`${key}-${i}`}>
+              <Text key={`${key}-${i}-text`}>* {convertRichTextSection(`${key}-${i}-sections`, e)}</Text>
+              <Newline />
+            </Fragment>
           ))}
         </Text>
       );
     case "rich_text_section":
-      return <Fragment key={key}>{element.elements.map((e) => convertRichTextElement(key, e))}</Fragment>;
+      return <Text key={key}>{element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}</Text>;
     case "rich_text_preformatted":
       return <Text key={key}>{`(${element.type} is not yet supported)`}</Text>;
     case "rich_text_quote":
@@ -151,16 +154,31 @@ export function convertRichText(key: string, element: Flatten<RichTextBlock["ele
   }
 }
 
-export function convertRichTextSection(key: string, element: RichTextSection): JSX.Element {
-  return <Fragment key={key}>{element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}</Fragment>;
+export function convertRichTextSection(key: string, element: RichTextSection): JSX.Element[] {
+  return element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e));
 }
 
 export function convertRichTextElement(key: string, element: RichTextElement): JSX.Element {
-  switch (element.type) {
-    case "text":
-      return <Text key={key}>{element.text}</Text>;
-  }
-  return <Text key={key}>({element.type} is not yet supported)</Text>;
+  const text: string | undefined =
+    element.type === "channel"
+      ? `#${element.channel_id}`
+      : element.type === "emoji"
+      ? `:${element.name}:`
+      : element.type === "link"
+      ? element.url
+      : element.type === "text"
+      ? element.text
+      : element.type === "user"
+      ? `@${element.user_id}`
+      : element.type === "usergroup"
+      ? `@${element.usergroup_id}`
+      : undefined;
+
+  return (
+    <Text key={key} bold={element.style?.bold} italic={element.style?.italic} strikethrough={element.style?.strike}>
+      {text!}
+    </Text>
+  );
 }
 
 export function convertImage(key: string, element: ImageBlock | ImageElement): JSX.Element {

@@ -51,41 +51,47 @@ describe("converting richTextSection", () => {
     expect(slack2Ink({ blocks: richTextSection })()).toMatchInlineSnapshot(`
       <React.Fragment>
         <React.Fragment>
-          <React.Fragment>
+          <Text>
             <Text>
               Hello there, I am a basic rich text block!
             </Text>
-          </React.Fragment>
+          </Text>
         </React.Fragment>
         <React.Fragment>
-          <React.Fragment>
+          <Text>
             <Text>
               Hello there, 
             </Text>
-            <Text>
+            <Text
+              bold={true}
+            >
               I am a bold rich text block!
             </Text>
-          </React.Fragment>
+          </Text>
         </React.Fragment>
         <React.Fragment>
-          <React.Fragment>
+          <Text>
             <Text>
               Hello there, 
             </Text>
-            <Text>
+            <Text
+              italic={true}
+            >
               I am an italic rich text block!
             </Text>
-          </React.Fragment>
+          </Text>
         </React.Fragment>
         <React.Fragment>
-          <React.Fragment>
+          <Text>
             <Text>
               Hello there, 
             </Text>
-            <Text>
+            <Text
+              strikethrough={true}
+            >
               I am a strikethrough rich text block!
             </Text>
-          </React.Fragment>
+          </Text>
         </React.Fragment>
       </React.Fragment>
     `);
@@ -97,36 +103,39 @@ describe("converting richTextList", () => {
     expect(slack2Ink({ blocks: richTextList })()).toMatchInlineSnapshot(`
       <React.Fragment>
         <React.Fragment>
-          <React.Fragment>
+          <Text>
             <Text>
               My favorite Slack features (in no particular order):
             </Text>
-          </React.Fragment>
+          </Text>
           <Text>
-            <Text>
-              * 
-              <React.Fragment>
+            <React.Fragment>
+              <Text>
+                * 
                 <Text>
                   Huddles
                 </Text>
-              </React.Fragment>
-            </Text>
-            <Text>
-              * 
-              <React.Fragment>
+              </Text>
+              <Newline />
+            </React.Fragment>
+            <React.Fragment>
+              <Text>
+                * 
                 <Text>
                   Canvas
                 </Text>
-              </React.Fragment>
-            </Text>
-            <Text>
-              * 
-              <React.Fragment>
+              </Text>
+              <Newline />
+            </React.Fragment>
+            <React.Fragment>
+              <Text>
+                * 
                 <Text>
                   Developing with Block Kit
                 </Text>
-              </React.Fragment>
-            </Text>
+              </Text>
+              <Newline />
+            </React.Fragment>
           </Text>
         </React.Fragment>
       </React.Fragment>
@@ -146,11 +155,11 @@ describe("converting richTextQuote", () => {
               What we need is good examples in our documentation.
             </Text>
           </Text>
-          <React.Fragment>
+          <Text>
             <Text>
               Yes - I completely agree, Luke!
             </Text>
-          </React.Fragment>
+          </Text>
         </React.Fragment>
       </React.Fragment>
     `);

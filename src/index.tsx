@@ -21,7 +21,6 @@ import type {
 type Flatten<T> = T extends (infer U)[] ? U : never;
 
 // setup TerminalRenderer
-marked.use({ mangle: false, headerIds: false });
 marked.setOptions({ renderer: new TerminalRenderer() });
 
 // Actually, children should be KnownBlock but I accept Block here
@@ -186,8 +185,9 @@ export function convertImage(key: string, element: ImageBlock | ImageElement): J
 }
 
 export function convertText(key: string, element: PlainTextElement | MrkdwnElement): JSX.Element {
+  // XXX:https://github.com/markedjs/marked/pull/3116
   return element.type === "mrkdwn" ? (
-    <Text key={key}>{marked(element.text.replace(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`))}</Text>
+    <Text key={key}>{marked(element.text.replace(/<(.+?)\|(.+?)>/g, (_, r1, r2) => `[${r2}](${r1})`)) as string}</Text>
   ) : (
     <Text key={key}>{element.text}</Text>
   );

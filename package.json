@@ -33,13 +33,12 @@
     "tsimp": "2.0.11",
     "typescript": "5.1.6"
   },
-  "dependencies": {},
-  "optionalDependencies": {
-    "@slack/types": "^2.8.0"
-  },
-  "peerDependencies": {
-    "ink": "^4.2.0 || ^5.0.0",
+  "dependencies": {
+    "ink": "^5.0.0",
     "marked-terminal": "^7.0.0",
     "react": "^18.2.0"
+  },
+  "optionalDependencies": {
+    "@slack/types": "^2.8.0"
   }
 }

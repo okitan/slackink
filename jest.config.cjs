@@ -89,7 +89,7 @@ module.exports = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
+    "^(\\.{1,2}/.*)\\.js$": "$1",
     "#(.*)": "<rootDir>/node_modules/$1",
   },
 
@@ -183,7 +183,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.tsx?$": ["ts-jest", { isolatedModules: true, useESM: true }],
+    "^.+\\.tsx?$": ["@swc/jest", { jsc: { transform: { react: { runtime: "automatic" } } } }],
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

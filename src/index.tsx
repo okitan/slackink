@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-import { Box, Text } from "ink";
+import { Box, Newline, Text } from "ink";
 import { marked } from "marked";
 import TerminalRenderer from "marked-terminal";
 
@@ -12,6 +12,9 @@ import type {
   KnownBlock,
   MrkdwnElement,
   PlainTextElement,
+  RichTextBlock,
+  RichTextElement,
+  RichTextSection,
   SectionBlock,
 } from "@slack/types";
 
@@ -58,6 +61,12 @@ export function convertBlock(key: string, block: KnownBlock): JSX.Element {
       return convertImage(key, block);
     case "input":
       return <Text key={key}>(input block is not yet supported)</Text>;
+    case "rich_text":
+      return (
+        <Fragment key={key}>
+          {block.elements.map((e, i) => convertRichText(`${key}-rich_text-elements-${i}`, e))}
+        </Fragment>
+      );
     case "section":
       return (
         <Fragment key={key}>
@@ -92,7 +101,7 @@ export function convertFields(key: string, fields: SectionBlock["fields"]): JSX.
   return (
     <Box key={key}>
       {fields.map((e, i) => (
-        <Text>(fields are not yet supported)</Text>
+        <Text key={`${key}-${i}`}>(fields are not yet supported)</Text>
       ))}
     </Box>
   );
@@ -115,6 +124,61 @@ export function convertElement(
       const never: never = element;
       throw new Error(`unknown element type: ${JSON.stringify(never)}`);
   }
+}
+
+export function convertRichText(key: string, element: Flatten<RichTextBlock["elements"]>): JSX.Element {
+  switch (element.type) {
+    case "rich_text_list":
+      return (
+        <Text key={key}>
+          {element.elements.map((e, i) => (
+            //TODO: tell convertRichTextSection to use bullet
+            <Fragment key={`${key}-${i}`}>
+              <Text key={`${key}-${i}-text`}>* {convertRichTextSection(`${key}-${i}-sections`, e)}</Text>
+              <Newline />
+            </Fragment>
+          ))}
+        </Text>
+      );
+    case "rich_text_section":
+      return <Text key={key}>{element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}</Text>;
+    case "rich_text_preformatted":
+      return <Text key={key}>{`(${element.type} is not yet supported)`}</Text>;
+    case "rich_text_quote":
+      //TODO: tell convertRichTextSection to use quote
+      return (
+        <Text key={key}>
+          {">"} {element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e))}
+        </Text>
+      );
+  }
+}
+
+export function convertRichTextSection(key: string, element: RichTextSection): JSX.Element[] {
+  return element.elements.map((e, i) => convertRichTextElement(`${key}-${i}`, e));
+}
+
+export function convertRichTextElement(key: string, element: RichTextElement): JSX.Element {
+  const text: string | undefined =
+    element.type === "channel"
+      ? `#${element.channel_id}`
+      : element.type === "emoji"
+        ? `:${element.name}:`
+        : element.type === "link"
+          ? element.url
+          : element.type === "text"
+            ? element.text
+            : element.type === "user"
+              ? `@${element.user_id}`
+              : element.type === "usergroup"
+                ? `@${element.usergroup_id}`
+                : undefined;
+
+  return (
+    <Text key={key} bold={element.style?.bold} italic={element.style?.italic} strikethrough={element.style?.strike}>
+      {text!}
+    </Text>
+  );
 }
 
 export function convertImage(key: string, element: ImageBlock | ImageElement): JSX.Element {

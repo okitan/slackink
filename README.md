@@ -12,7 +12,7 @@ $ npm install @okitan/ink-slack ink react
 
 ```typescript
 import { Slack } from "@okitan/ink-slack";
-import { KnownBlock } from "@slack/types";
+import type { KnownBlock } from "@slack/types";
 import { render } from "ink";
 
 const blocks: KnownBlock[] = [
